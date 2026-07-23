@@ -11,7 +11,9 @@ from ..models import ProductResult
 from . import base
 
 
-def check_target(target: dict, settings: dict, fetcher: base.Fetcher) -> ProductResult:
+def check_target(
+    target: dict, settings: dict, fetcher: base.Fetcher, *, debug: bool = False
+) -> ProductResult:
     """Check a single target. Never raises — failures become error results."""
     result = ProductResult(
         target_id=target["id"],
@@ -20,12 +22,21 @@ def check_target(target: dict, settings: dict, fetcher: base.Fetcher) -> Product
         url=target["url"],
     )
     try:
-        html = fetcher.fetch(target["url"], method=target.get("method", "playwright"))
-        fields = base.analyze(html, settings, price_selector=target.get("price_selector"))
+        method = target.get("method", "playwright")
+        if method == "shopify":
+            # Structured product JSON — no HTML analysis needed.
+            fields = fetcher.fetch_shopify(target["url"])
+        else:
+            html = fetcher.fetch(target["url"], method=method)
+            fields = base.analyze(html, settings, price_selector=target.get("price_selector"))
+            if debug:
+                fields = {**fields, "debug": base.debug_snapshot(html, settings)}
         result.in_stock = fields["in_stock"]
         result.price = fields["price"]
         result.price_text = fields["price_text"]
-        result.dispatch = fields["dispatch"]
+        result.dispatch = fields.get("dispatch")
+        if debug and fields.get("debug"):
+            result.debug = fields["debug"]
     except Exception as exc:  # noqa: BLE001 — one vendor failing must not abort the run
         result.error = f"{type(exc).__name__}: {exc}"
     return result

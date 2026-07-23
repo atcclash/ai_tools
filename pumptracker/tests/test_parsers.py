@@ -65,6 +65,27 @@ def test_new_stock_only_on_transition():
     assert _is_new_stock(r, {"in_stock": True}) is False      # already in stock, no re-alert
 
 
+def test_shopify_parse_in_stock_and_price():
+    product = {
+        "title": "Intex SX925 Sand Filter Pump",
+        "variants": [
+            {"available": False, "price": 14999},
+            {"available": True, "price": 12999},   # pence
+        ],
+    }
+    fields = base.parse_shopify_product(product)
+    assert fields["in_stock"] is True
+    assert fields["price"] == 129.99            # cheapest available variant, pence -> £
+    assert fields["price_text"] == "£129.99"
+
+
+def test_shopify_parse_sold_out():
+    product = {"title": "X", "available": False, "variants": [{"available": False, "price": 13000}]}
+    fields = base.parse_shopify_product(product)
+    assert fields["in_stock"] is False
+    assert fields["price"] == 130.00
+
+
 def test_error_result_never_alerts_and_carries_forward_state():
     err = ProductResult("t", "V", "P", "http://x", error="Timeout")
     prev = {"in_stock": True, "price": 130.0, "last_in_stock_at": "2026-07-01T00:00:00+00:00"}

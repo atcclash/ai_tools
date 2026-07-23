@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 */5 * * *"   # every 5 hours (UTC)
   workflow_dispatch:         # allow manual runs from the Actions tab
+    inputs:
+      debug:
+        description: "Log a per-page diagnosis (title, anti-bot flag, matched markers)"
+        type: boolean
+        default: false
 
 # Needed so the job can commit the updated state.json back to the repo.
 permissions:
@@ -38,6 +43,8 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          # Empty unless the manual run ticked "debug" (avoids Python truthiness on "false").
+          PUMPTRACKER_DEBUG: ${{ inputs.debug == true && '1' || '' }}
         run: python -m pumptracker.main
 
       - name: Commit updated state

@@ -99,6 +99,33 @@ def extract_dispatch(text_newlines: str, settings: dict) -> Optional[str]:
     return None
 
 
+_ANTIBOT_MARKERS = [
+    "just a moment", "enable javascript", "checking your browser", "cloudflare",
+    "performing security verification", "recaptcha", "px-captcha",
+    "are you a robot", "are you human", "access denied", "continue shopping",
+    "request could not be satisfied", "verify you are a human",
+    "unusual traffic", "local_rate_limited",
+]
+
+
+def debug_snapshot(html: str, settings: dict) -> str:
+    """A compact one-line diagnosis of a page: title, size, anti-bot flag, which
+    stock markers matched, and the start of the visible text. Debug mode only."""
+    tree = HTMLParser(html)
+    title_node = tree.css_first("title")
+    title = title_node.text(strip=True) if title_node else ""
+    text = extract_text(html)
+    low = text.lower()
+    antibot = [m for m in _ANTIBOT_MARKERS if m in low]
+    oos = [m for m in settings.get("out_of_stock_markers", []) if m.lower() in low]
+    ins = [m for m in settings.get("in_stock_markers", []) if m.lower() in low]
+    snippet = re.sub(r"\s+", " ", text)[:240]
+    return (
+        f"title={title!r} textlen={len(text)} "
+        f"antibot={antibot or '-'} oos={oos or '-'} ins={ins or '-'} :: {snippet}"
+    )
+
+
 def analyze(html: str, settings: dict, price_selector: Optional[str] = None) -> dict:
     """Turn raw HTML into the fields of a ProductResult (stock/price/dispatch)."""
     text = extract_text(html, separator=" ")
@@ -111,6 +138,27 @@ def analyze(html: str, settings: dict, price_selector: Optional[str] = None) -> 
         "price": price,
         "price_text": price_text,
         "dispatch": dispatch,
+    }
+
+
+def parse_shopify_product(product: dict) -> dict:
+    """Turn a Shopify `/products/<handle>.js` payload into analyze-style fields."""
+    variants = product.get("variants", []) or []
+    in_stock = product.get("available")
+    if in_stock is None:
+        in_stock = any(v.get("available") for v in variants)
+
+    # Shopify prices are integer minor units (pence).
+    prices = [v["price"] for v in variants if isinstance(v.get("price"), (int, float))]
+    cents = min(prices) if prices else product.get("price")
+    price = round(cents / 100, 2) if isinstance(cents, (int, float)) else None
+
+    return {
+        "in_stock": bool(in_stock),
+        "price": price,
+        "price_text": f"£{price:.2f}" if price is not None else None,
+        "dispatch": None,
+        "debug": f"shopify title={product.get('title')!r} available={in_stock} price={price}",
     }
 
 
@@ -160,6 +208,26 @@ class Fetcher:
             return self._fetch_httpx(url)
         return self._fetch_playwright(url)
 
+    def fetch_shopify(self, url: str) -> dict:
+        """Read a Shopify product's structured JSON (`/products/<handle>.js`).
+
+        Bypasses the HTML page (and its bot-wall/rate-limit) and returns exact
+        stock + price from the store's own data. Returns analyze-style fields.
+        """
+        import httpx
+
+        endpoint = url.split("?")[0].rstrip("/") + ".js"
+        timeout = self.settings.get("page_timeout_ms", 30000) / 1000
+        headers = {
+            "User-Agent": self.user_agent,
+            "Accept": "application/json, text/javascript, */*; q=0.01",
+            "Accept-Language": "en-GB,en;q=0.9",
+            "X-Requested-With": "XMLHttpRequest",
+        }
+        resp = httpx.get(endpoint, headers=headers, timeout=timeout, follow_redirects=True)
+        resp.raise_for_status()
+        return parse_shopify_product(resp.json())
+
     def _fetch_httpx(self, url: str) -> str:
         import httpx
 
@@ -190,7 +258,12 @@ class Fetcher:
         page = context.new_page()
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=timeout)
-            # Give client-rendered stock/price widgets a moment to populate.
+            # Let client-rendered stock/price widgets settle: wait for the network
+            # to go quiet (capped), then a short fixed pause as a backstop.
+            try:
+                page.wait_for_load_state("networkidle", timeout=8000)
+            except Exception:  # noqa: BLE001 — networkidle is best-effort
+                pass
             page.wait_for_timeout(2500)
             return page.content()
         finally:
