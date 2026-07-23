@@ -1,0 +1,109 @@
+# ---------------------------------------------------------------------------
+# Pool pump availability tracker — configuration
+#
+# Watches specific UK product pages for the Intex SX925 and compatible pumps
+# for a 10ft Bestway Steel Pro Max. Edit `targets` freely: add/remove URLs,
+# fix any that a vendor renumbers. Each target is one product at one vendor.
+#
+# Stock is decided by rendering the real page and looking for the text markers
+# below. If a vendor's page needs a precise selector, set `price_selector` or
+# `stock_selector` on that target to override the text-marker heuristic.
+# ---------------------------------------------------------------------------
+
+settings:
+  page_timeout_ms: 30000        # per-page render timeout
+  min_delay_seconds: 3          # polite randomised pause between targets
+  max_delay_seconds: 8
+  price_min_plausible: 30       # ignore £ amounts outside this band when auto-detecting
+  price_max_plausible: 400
+
+  # If any of these appear on the page, treat it as OUT OF STOCK (takes precedence).
+  out_of_stock_markers:
+    - "sold out"
+    - "out of stock"
+    - "out-of-stock"
+    - "currently unavailable"
+    - "temporarily out of stock"
+    - "notify me when"
+    - "email when available"
+    - "email when back in stock"
+    - "notify when available"
+    - "no longer available"
+    - "coming soon"
+
+  # Otherwise, if any of these appear, treat it as IN STOCK.
+  in_stock_markers:
+    - "add to basket"
+    - "add to cart"
+    - "add to trolley"
+    - "add to bag"
+    - "buy it now"
+    - "buy now"
+
+  # Best-effort: lines containing these hint at a dispatch/delivery estimate.
+  dispatch_keywords:
+    - "dispatch"
+    - "despatch"
+    - "delivery"
+    - "delivered"
+    - "ships"
+    - "working days"
+
+# Each target = one product page to watch.
+# method: "playwright" (default, renders in a real browser) or "httpx" (static HTML only).
+targets:
+  # --- Intex SX925 (primary target) -------------------------------------
+  - id: heatpumps4pools-sx925
+    vendor: HeatPumps4Pools
+    product: Intex SX925 sand filter pump
+    url: https://heatpumps4pools.com/product/krystal-clear-sx925-sand-filter-pump-intex-pool-pump-and-filter-filtration-set-for-above-ground-swimming-pools/
+    method: playwright
+
+  - id: poolpro-sx925
+    vendor: PoolPro (official Intex UK)
+    product: Intex SX925 sand filter pump
+    url: https://www.poolpro.co.uk/intex-925-gal-h-sand-filter-pump-for-pools-up-to-3-697-gal
+    method: playwright
+
+  - id: amazon-sx925-26641
+    vendor: Amazon UK
+    product: Intex SX925 sand filter pump (26641EG)
+    url: https://www.amazon.co.uk/Intex-26641EG-SX925-Krystal-Filter/dp/B099LRF8ZK
+    method: playwright
+
+  - id: amazon-sx925-6way
+    vendor: Amazon UK
+    product: Intex SX925 sand filter pump (6-way valve)
+    url: https://www.amazon.co.uk/Intex-Krystal-Clear-Sand-Filter/dp/B09T71Y1ZC
+    method: playwright
+
+  - id: discountleisure-sx925
+    vendor: Discount Leisure Products
+    product: Intex SX925 sand filter pump
+    url: https://www.discountleisureproducts.co.uk/pool-spa-supplies-c11/pool-pumps-filtration-c55/intex-krystal-clear-sx925-gal-swimming-pool-sand-filter-pump-p3464
+    method: playwright
+
+  - id: splashandrelax-sx925
+    vendor: Splash & Relax
+    product: Intex SX925 sand filter pump
+    url: https://www.splashandrelax.co.uk/products/Pool+Accessories/Pool+Pumps+&+Counter+Current/Intex+SX925+Krystal+Clear+Sand+Filter+Pump/1725937340
+    method: playwright
+
+  - id: intexwetset-sx925
+    vendor: Intex Wetset
+    product: Intex SX925 sand filter pump
+    url: https://intexwetset.co.uk/products/intex-krystal-clear-sand-filter-pump-sx925
+    method: playwright
+
+  # --- Cheaper equivalent: Bestway 800gal Flowclear (cartridge, native fit) ---
+  - id: onbuy-bestway-800gal
+    vendor: OnBuy
+    product: Bestway 800gal Flowclear filter pump
+    url: https://www.onbuy.com/gb/p/bestway-800gal-flowclear-filter-pump~p35360764/
+    method: playwright
+
+  - id: bestwaystore-800gal
+    vendor: Bestway (official store)
+    product: Bestway 800gal Flowclear filter pump
+    url: https://www.bestwaystore.co.uk/products/800gal-flowclear-filter-pump
+    method: playwright

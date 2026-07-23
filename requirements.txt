@@ -1,0 +1,5 @@
+# Pool pump availability tracker dependencies
+playwright==1.48.0        # headless Chromium — default fetch path (retailer pages block plain HTTP)
+httpx==0.27.2             # lightweight fetch for clean static pages + Telegram Bot API calls
+selectolax==0.3.21        # fast HTML parsing for the static-page path
+PyYAML==6.0.2             # config.yaml loading
