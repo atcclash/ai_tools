@@ -101,9 +101,16 @@ def extract_dispatch(text_newlines: str, settings: dict) -> Optional[str]:
 
 _ANTIBOT_MARKERS = [
     "just a moment", "enable javascript", "checking your browser", "cloudflare",
-    "captcha", "are you a robot", "are you human", "access denied",
-    "request could not be satisfied", "verify you are a human", "px-captcha",
-    "unusual traffic", "to continue, please", "/errors/500",
+    "performing security verification", "recaptcha", "px-captcha",
+    "are you a robot", "are you human", "access denied", "continue shopping",
+    "request could not be satisfied", "verify you are a human",
+    "unusual traffic", "local_rate_limited",
+]
+
+# Substrings that mean we got an interstitial/challenge instead of the product page.
+_CHALLENGE_MARKERS = [
+    "just a moment", "performing security verification", "checking your browser",
+    "continue shopping", "enable javascript and cookies",
 ]
 
 
@@ -137,6 +144,27 @@ def analyze(html: str, settings: dict, price_selector: Optional[str] = None) -> 
         "price": price,
         "price_text": price_text,
         "dispatch": dispatch,
+    }
+
+
+def parse_shopify_product(product: dict) -> dict:
+    """Turn a Shopify `/products/<handle>.js` payload into analyze-style fields."""
+    variants = product.get("variants", []) or []
+    in_stock = product.get("available")
+    if in_stock is None:
+        in_stock = any(v.get("available") for v in variants)
+
+    # Shopify prices are integer minor units (pence).
+    prices = [v["price"] for v in variants if isinstance(v.get("price"), (int, float))]
+    cents = min(prices) if prices else product.get("price")
+    price = round(cents / 100, 2) if isinstance(cents, (int, float)) else None
+
+    return {
+        "in_stock": bool(in_stock),
+        "price": price,
+        "price_text": f"£{price:.2f}" if price is not None else None,
+        "dispatch": None,
+        "debug": f"shopify title={product.get('title')!r} available={in_stock} price={price}",
     }
 
 
@@ -186,6 +214,26 @@ class Fetcher:
             return self._fetch_httpx(url)
         return self._fetch_playwright(url)
 
+    def fetch_shopify(self, url: str) -> dict:
+        """Read a Shopify product's structured JSON (`/products/<handle>.js`).
+
+        Bypasses the HTML page (and its bot-wall/rate-limit) and returns exact
+        stock + price from the store's own data. Returns analyze-style fields.
+        """
+        import httpx
+
+        endpoint = url.split("?")[0].rstrip("/") + ".js"
+        timeout = self.settings.get("page_timeout_ms", 30000) / 1000
+        headers = {
+            "User-Agent": self.user_agent,
+            "Accept": "application/json, text/javascript, */*; q=0.01",
+            "Accept-Language": "en-GB,en;q=0.9",
+            "X-Requested-With": "XMLHttpRequest",
+        }
+        resp = httpx.get(endpoint, headers=headers, timeout=timeout, follow_redirects=True)
+        resp.raise_for_status()
+        return parse_shopify_product(resp.json())
+
     def _fetch_httpx(self, url: str) -> str:
         import httpx
 
@@ -223,6 +271,34 @@ class Fetcher:
             except Exception:  # noqa: BLE001 — networkidle is best-effort
                 pass
             page.wait_for_timeout(2500)
-            return page.content()
+            content = page.content()
+            return self._clear_interstitial(page, content)
         finally:
             context.close()
+
+    @staticmethod
+    def _clear_interstitial(page, content: str) -> str:
+        """If the page is a Cloudflare challenge or Amazon 'Continue shopping'
+        interstitial, give it a couple of chances to resolve (auto-pass or a
+        button click) and re-read. Best-effort — walls that don't clear stay
+        UNKNOWN rather than producing a wrong answer."""
+        for _ in range(2):
+            low = content.lower()
+            if not any(m in low for m in _CHALLENGE_MARKERS):
+                return content
+            # Amazon's interstitial has a "Continue shopping" button — try it.
+            try:
+                btn = page.query_selector(
+                    "input[type=submit], button:has-text('Continue'), a:has-text('Continue')"
+                )
+                if btn:
+                    btn.click(timeout=4000)
+            except Exception:  # noqa: BLE001
+                pass
+            page.wait_for_timeout(6000)  # let a non-interactive challenge auto-clear
+            try:
+                page.wait_for_load_state("networkidle", timeout=6000)
+            except Exception:  # noqa: BLE001
+                pass
+            content = page.content()
+        return content

@@ -93,7 +93,7 @@ targets:
     vendor: Intex Wetset
     product: Intex SX925 sand filter pump
     url: https://intexwetset.co.uk/products/intex-krystal-clear-sand-filter-pump-sx925
-    method: playwright
+    method: shopify   # Shopify store — read structured product JSON, bypasses HTML throttle
 
   # --- Cheaper equivalent: Bestway 800gal Flowclear (cartridge, native fit) ---
   - id: onbuy-bestway-800gal
@@ -106,4 +106,4 @@ targets:
     vendor: Bestway (official store)
     product: Bestway 800gal Flowclear filter pump
     url: https://www.bestwaystore.co.uk/products/800gal-flowclear-filter-pump
-    method: playwright
+    method: shopify   # Shopify store — read structured product JSON, bypasses HTML throttle
