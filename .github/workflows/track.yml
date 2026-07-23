@@ -5,6 +5,10 @@ on:
     - cron: "0 */5 * * *"   # every 5 hours (UTC)
   workflow_dispatch:         # allow manual runs from the Actions tab
     inputs:
+      test_notify:
+        description: "Send a test alert (Telegram + email) instead of checking stock"
+        type: boolean
+        default: false
       debug:
         description: "Log a per-page diagnosis (title, anti-bot flag, matched markers)"
         type: boolean
@@ -45,7 +49,8 @@ jobs:
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
           # Empty unless the manual run ticked "debug" (avoids Python truthiness on "false").
           PUMPTRACKER_DEBUG: ${{ inputs.debug == true && '1' || '' }}
-        run: python -m pumptracker.main
+        # With test_notify ticked, send one sample alert and exit (touches no state).
+        run: python -m pumptracker.main ${{ inputs.test_notify == true && '--test-notify' || '' }}
 
       - name: Commit updated state
         run: |
