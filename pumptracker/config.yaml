@@ -89,12 +89,6 @@ targets:
     url: https://www.splashandrelax.co.uk/products/Pool+Accessories/Pool+Pumps+&+Counter+Current/Intex+SX925+Krystal+Clear+Sand+Filter+Pump/1725937340
     method: playwright
 
-  - id: intexwetset-sx925
-    vendor: Intex Wetset
-    product: Intex SX925 sand filter pump
-    url: https://intexwetset.co.uk/products/intex-krystal-clear-sand-filter-pump-sx925
-    method: shopify   # Shopify store — read structured product JSON, bypasses HTML throttle
-
   # --- Cheaper equivalent: Bestway 800gal Flowclear (cartridge, native fit) ---
   - id: onbuy-bestway-800gal
     vendor: OnBuy

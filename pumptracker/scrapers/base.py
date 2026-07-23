@@ -107,12 +107,6 @@ _ANTIBOT_MARKERS = [
     "unusual traffic", "local_rate_limited",
 ]
 
-# Substrings that mean we got an interstitial/challenge instead of the product page.
-_CHALLENGE_MARKERS = [
-    "just a moment", "performing security verification", "checking your browser",
-    "continue shopping", "enable javascript and cookies",
-]
-
 
 def debug_snapshot(html: str, settings: dict) -> str:
     """A compact one-line diagnosis of a page: title, size, anti-bot flag, which
@@ -271,34 +265,6 @@ class Fetcher:
             except Exception:  # noqa: BLE001 — networkidle is best-effort
                 pass
             page.wait_for_timeout(2500)
-            content = page.content()
-            return self._clear_interstitial(page, content)
+            return page.content()
         finally:
             context.close()
-
-    @staticmethod
-    def _clear_interstitial(page, content: str) -> str:
-        """If the page is a Cloudflare challenge or Amazon 'Continue shopping'
-        interstitial, give it a couple of chances to resolve (auto-pass or a
-        button click) and re-read. Best-effort — walls that don't clear stay
-        UNKNOWN rather than producing a wrong answer."""
-        for _ in range(2):
-            low = content.lower()
-            if not any(m in low for m in _CHALLENGE_MARKERS):
-                return content
-            # Amazon's interstitial has a "Continue shopping" button — try it.
-            try:
-                btn = page.query_selector(
-                    "input[type=submit], button:has-text('Continue'), a:has-text('Continue')"
-                )
-                if btn:
-                    btn.click(timeout=4000)
-            except Exception:  # noqa: BLE001
-                pass
-            page.wait_for_timeout(6000)  # let a non-interactive challenge auto-clear
-            try:
-                page.wait_for_load_state("networkidle", timeout=6000)
-            except Exception:  # noqa: BLE001
-                pass
-            content = page.content()
-        return content

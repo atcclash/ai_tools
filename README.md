@@ -102,11 +102,27 @@ if a vendor renumbers the product. Each target is:
 The `settings` block at the top controls check pacing, the plausible price band, and the text
 markers used to decide stock — tweak if a vendor uses unusual wording.
 
+## Vendor coverage (measured on live runs)
+
+Not every retailer can be read reliably — some sit behind bot-walls that headless Chromium can't
+pass. The tracker is built so a blocked page returns **UNKNOWN** and never a wrong answer, so
+you'll never get a false alert; the trade-off is those vendors aren't effectively watched.
+
+| Vendor | Method | Status |
+|---|---|---|
+| HeatPumps4Pools | browser | ✅ reliable |
+| Discount Leisure Products | browser | ✅ reliable (price occasionally misreads — verify at the link) |
+| Bestway official store | Shopify JSON | ✅ reliable |
+| PoolPro, Splash & Relax, OnBuy | browser | ⛔ Cloudflare "Just a moment" wall → UNKNOWN |
+| Amazon UK | browser | ⛔ robot interstitial → UNKNOWN |
+
+To cover the walled vendors you'd need a paid anti-bot fetch (e.g. ScraperAPI / Zyte / a residential
+proxy) wired into `scrapers/base.py` — deliberately out of scope for a free personal tool. If you
+want it later, that's the place to add it.
+
 ## Notes & limits
 
 - **Delivery to Chislehurst (BR7):** the tracker shows the vendor's generic dispatch line
   ("dispatched in 1–2 days"); the exact doorstep date only appears at checkout.
-- **Amazon** is best-effort — it sometimes blocks even a real browser from cloud IPs and may report
-  "unknown" rather than a stock state. Other vendors are more reliable.
 - **Cost:** £0. Well within the GitHub Actions free tier at a few runs a day.
 - **First run** may alert for anything already in stock — that's intended (you want to know now).
