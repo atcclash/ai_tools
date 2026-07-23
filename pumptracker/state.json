@@ -2,7 +2,7 @@
   "amazon-sx925-26641": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:26:51+00:00",
+    "last_checked": "2026-07-23T20:32:43+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -14,7 +14,7 @@
   "amazon-sx925-6way": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:27:08+00:00",
+    "last_checked": "2026-07-23T20:32:50+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -26,7 +26,7 @@
   "bestwaystore-800gal": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:28:34+00:00",
+    "last_checked": "2026-07-23T20:33:37+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 59.99,
@@ -38,7 +38,7 @@
   "discountleisure-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:27:26+00:00",
+    "last_checked": "2026-07-23T20:33:01+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 39.99,
@@ -50,7 +50,7 @@
   "heatpumps4pools-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:25:39+00:00",
+    "last_checked": "2026-07-23T20:32:22+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 150.0,
@@ -74,7 +74,7 @@
   "onbuy-bestway-800gal": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:28:12+00:00",
+    "last_checked": "2026-07-23T20:33:27+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -86,7 +86,7 @@
   "poolpro-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:26:27+00:00",
+    "last_checked": "2026-07-23T20:32:31+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -98,7 +98,7 @@
   "splashandrelax-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-07-23T20:27:44+00:00",
+    "last_checked": "2026-07-23T20:33:16+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
