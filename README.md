@@ -68,7 +68,11 @@ Telegram and email are independent — set up either, both, or (for testing) nei
 1. **Actions** tab → enable workflows if prompted.
 2. Open **Pool pump tracker** → **Run workflow** (manual `workflow_dispatch`) to check it runs and
    commits `state.json`.
-3. After that, it runs automatically every ~5 hours.
+3. **Verify alerts reach you:** on that same **Run workflow** panel, tick **test_notify** and run.
+   It sends one sample Telegram + email and exits without touching state — so you can confirm both
+   channels work even while everything is out of stock. (A normal run only alerts on an
+   out-of-stock → in-stock change.)
+4. After that, it runs automatically every ~5 hours.
 
 ## Local usage (optional)
 
