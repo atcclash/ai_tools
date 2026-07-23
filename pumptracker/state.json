@@ -1,0 +1,110 @@
+{
+  "amazon-sx925-26641": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:19:55+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Intex SX925 sand filter pump (26641EG)",
+    "url": "https://www.amazon.co.uk/Intex-26641EG-SX925-Krystal-Filter/dp/B099LRF8ZK",
+    "vendor": "Amazon UK"
+  },
+  "amazon-sx925-6way": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:03+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Intex SX925 sand filter pump (6-way valve)",
+    "url": "https://www.amazon.co.uk/Intex-Krystal-Clear-Sand-Filter/dp/B09T71Y1ZC",
+    "vendor": "Amazon UK"
+  },
+  "bestwaystore-800gal": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:56+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Bestway 800gal Flowclear filter pump",
+    "url": "https://www.bestwaystore.co.uk/products/800gal-flowclear-filter-pump",
+    "vendor": "Bestway (official store)"
+  },
+  "discountleisure-sx925": {
+    "in_stock": false,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:13+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": 39.99,
+    "price_text": "\u00a339.99",
+    "product": "Intex SX925 sand filter pump",
+    "url": "https://www.discountleisureproducts.co.uk/pool-spa-supplies-c11/pool-pumps-filtration-c55/intex-krystal-clear-sx925-gal-swimming-pool-sand-filter-pump-p3464",
+    "vendor": "Discount Leisure Products"
+  },
+  "heatpumps4pools-sx925": {
+    "in_stock": false,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:19:31+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": 150.0,
+    "price_text": "\u00a3150.00",
+    "product": "Intex SX925 sand filter pump",
+    "url": "https://heatpumps4pools.com/product/krystal-clear-sx925-sand-filter-pump-intex-pool-pump-and-filter-filtration-set-for-above-ground-swimming-pools/",
+    "vendor": "HeatPumps4Pools"
+  },
+  "intexwetset-sx925": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:39+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Intex SX925 sand filter pump",
+    "url": "https://intexwetset.co.uk/products/intex-krystal-clear-sand-filter-pump-sx925",
+    "vendor": "Intex Wetset"
+  },
+  "onbuy-bestway-800gal": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:47+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Bestway 800gal Flowclear filter pump",
+    "url": "https://www.onbuy.com/gb/p/bestway-800gal-flowclear-filter-pump~p35360764/",
+    "vendor": "OnBuy"
+  },
+  "poolpro-sx925": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:19:47+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Intex SX925 sand filter pump",
+    "url": "https://www.poolpro.co.uk/intex-925-gal-h-sand-filter-pump-for-pools-up-to-3-697-gal",
+    "vendor": "PoolPro (official Intex UK)"
+  },
+  "splashandrelax-sx925": {
+    "in_stock": null,
+    "last_alerted_at": null,
+    "last_checked": "2026-07-23T20:20:28+00:00",
+    "last_error": null,
+    "last_in_stock_at": null,
+    "price": null,
+    "price_text": null,
+    "product": "Intex SX925 sand filter pump",
+    "url": "https://www.splashandrelax.co.uk/products/Pool+Accessories/Pool+Pumps+&+Counter+Current/Intex+SX925+Krystal+Clear+Sand+Filter+Pump/1725937340",
+    "vendor": "Splash & Relax"
+  }
+}
