@@ -11,7 +11,9 @@ from ..models import ProductResult
 from . import base
 
 
-def check_target(target: dict, settings: dict, fetcher: base.Fetcher) -> ProductResult:
+def check_target(
+    target: dict, settings: dict, fetcher: base.Fetcher, *, debug: bool = False
+) -> ProductResult:
     """Check a single target. Never raises — failures become error results."""
     result = ProductResult(
         target_id=target["id"],
@@ -26,6 +28,8 @@ def check_target(target: dict, settings: dict, fetcher: base.Fetcher) -> Product
         result.price = fields["price"]
         result.price_text = fields["price_text"]
         result.dispatch = fields["dispatch"]
+        if debug:
+            result.debug = base.debug_snapshot(html, settings)
     except Exception as exc:  # noqa: BLE001 — one vendor failing must not abort the run
         result.error = f"{type(exc).__name__}: {exc}"
     return result

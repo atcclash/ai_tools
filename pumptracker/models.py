@@ -28,6 +28,7 @@ class ProductResult:
     dispatch: Optional[str] = None         # generic dispatch/delivery note if found
     error: Optional[str] = None            # populated when the check failed
     checked_at: str = field(default_factory=_now_iso)
+    debug: Optional[str] = None            # only set in debug mode; never persisted to state
 
     @property
     def ok(self) -> bool:

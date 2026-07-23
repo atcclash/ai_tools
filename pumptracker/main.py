@@ -104,6 +104,7 @@ def run_once(config: dict, state_path: Path, *, dry_run: bool) -> list[ProductRe
     settings = config.get("settings", {})
     targets = config.get("targets", [])
     state = load_state(state_path)
+    debug = bool(os.environ.get("PUMPTRACKER_DEBUG"))
 
     results: list[ProductResult] = []
     lo = settings.get("min_delay_seconds", 2)
@@ -114,8 +115,10 @@ def run_once(config: dict, state_path: Path, *, dry_run: bool) -> list[ProductRe
             if i > 0:
                 time.sleep(random.uniform(lo, hi))  # polite pacing between vendors
             log.info("Checking %s — %s", target["vendor"], target["product"])
-            result = check_target(target, settings, fetcher)
+            result = check_target(target, settings, fetcher, debug=debug)
             log.info("  -> %s  %s", result.status_display(), result.price_display())
+            if result.debug:
+                log.info("  debug: %s", result.debug)
             results.append(result)
 
     # Diff, collect alerts, build next state.

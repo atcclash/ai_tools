@@ -99,6 +99,32 @@ def extract_dispatch(text_newlines: str, settings: dict) -> Optional[str]:
     return None
 
 
+_ANTIBOT_MARKERS = [
+    "just a moment", "enable javascript", "checking your browser", "cloudflare",
+    "captcha", "are you a robot", "are you human", "access denied",
+    "request could not be satisfied", "verify you are a human", "px-captcha",
+    "unusual traffic", "to continue, please", "/errors/500",
+]
+
+
+def debug_snapshot(html: str, settings: dict) -> str:
+    """A compact one-line diagnosis of a page: title, size, anti-bot flag, which
+    stock markers matched, and the start of the visible text. Debug mode only."""
+    tree = HTMLParser(html)
+    title_node = tree.css_first("title")
+    title = title_node.text(strip=True) if title_node else ""
+    text = extract_text(html)
+    low = text.lower()
+    antibot = [m for m in _ANTIBOT_MARKERS if m in low]
+    oos = [m for m in settings.get("out_of_stock_markers", []) if m.lower() in low]
+    ins = [m for m in settings.get("in_stock_markers", []) if m.lower() in low]
+    snippet = re.sub(r"\s+", " ", text)[:240]
+    return (
+        f"title={title!r} textlen={len(text)} "
+        f"antibot={antibot or '-'} oos={oos or '-'} ins={ins or '-'} :: {snippet}"
+    )
+
+
 def analyze(html: str, settings: dict, price_selector: Optional[str] = None) -> dict:
     """Turn raw HTML into the fields of a ProductResult (stock/price/dispatch)."""
     text = extract_text(html, separator=" ")
@@ -190,7 +216,12 @@ class Fetcher:
         page = context.new_page()
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=timeout)
-            # Give client-rendered stock/price widgets a moment to populate.
+            # Let client-rendered stock/price widgets settle: wait for the network
+            # to go quiet (capped), then a short fixed pause as a backstop.
+            try:
+                page.wait_for_load_state("networkidle", timeout=8000)
+            except Exception:  # noqa: BLE001 — networkidle is best-effort
+                pass
             page.wait_for_timeout(2500)
             return page.content()
         finally:
