@@ -2,7 +2,7 @@
   "amazon-sx925-26641": {
     "in_stock": true,
     "last_alerted_at": "2026-08-18T15:28:21+00:00",
-    "last_checked": "2026-08-23T20:18:35+00:00",
+    "last_checked": "2026-08-24T01:04:53+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-08-19T05:26:56+00:00",
     "price": 126.92,
@@ -14,7 +14,7 @@
   "amazon-sx925-6way": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:18:45+00:00",
+    "last_checked": "2026-08-24T01:05:00+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 132.24,
@@ -26,7 +26,7 @@
   "bestwaystore-800gal": {
     "in_stock": false,
     "last_alerted_at": "2026-08-13T10:59:44+00:00",
-    "last_checked": "2026-08-23T20:19:31+00:00",
+    "last_checked": "2026-08-24T01:05:50+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-08-13T10:59:44+00:00",
     "price": 59.99,
@@ -38,7 +38,7 @@
   "discountleisure-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:18:56+00:00",
+    "last_checked": "2026-08-24T01:05:07+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 39.99,
@@ -50,8 +50,8 @@
   "heatpumps4pools-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:18:14+00:00",
-    "last_error": "Error: Page.content: Unable to retrieve content because the page is navigating and changing the content.",
+    "last_checked": "2026-08-24T01:04:28+00:00",
+    "last_error": null,
     "last_in_stock_at": null,
     "price": 150.0,
     "price_text": "\u00a3150.00",
@@ -74,7 +74,7 @@
   "onbuy-bestway-800gal": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:19:22+00:00",
+    "last_checked": "2026-08-24T01:05:39+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -86,7 +86,7 @@
   "poolpro-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:18:23+00:00",
+    "last_checked": "2026-08-24T01:04:46+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -98,7 +98,7 @@
   "splashandrelax-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-08-23T20:19:10+00:00",
+    "last_checked": "2026-08-24T01:05:29+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
