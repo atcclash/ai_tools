@@ -2,7 +2,7 @@
   "amazon-sx925-26641": {
     "in_stock": true,
     "last_alerted_at": "2026-08-18T15:28:21+00:00",
-    "last_checked": "2026-09-05T08:47:43+00:00",
+    "last_checked": "2026-09-05T13:14:47+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-08-19T05:26:56+00:00",
     "price": 126.92,
@@ -14,7 +14,7 @@
   "amazon-sx925-6way": {
     "in_stock": true,
     "last_alerted_at": "2026-08-26T10:32:29+00:00",
-    "last_checked": "2026-09-05T08:47:51+00:00",
+    "last_checked": "2026-09-05T13:14:58+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-08-26T10:32:29+00:00",
     "price": 117.4,
@@ -26,7 +26,7 @@
   "bestwaystore-800gal": {
     "in_stock": false,
     "last_alerted_at": "2026-08-13T10:59:44+00:00",
-    "last_checked": "2026-09-05T08:48:27+00:00",
+    "last_checked": "2026-09-05T13:15:45+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-08-13T10:59:44+00:00",
     "price": 59.99,
@@ -38,7 +38,7 @@
   "discountleisure-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-09-05T08:47:57+00:00",
+    "last_checked": "2026-09-05T13:15:08+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 39.99,
@@ -50,8 +50,8 @@
   "heatpumps4pools-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-09-05T08:47:25+00:00",
-    "last_error": null,
+    "last_checked": "2026-09-05T13:14:02+00:00",
+    "last_error": "TimeoutError: Page.goto: Timeout 30000ms exceeded.\nCall log:\nnavigating to \"https://heatpumps4pools.com/product/krystal-clear-sx925-sand-filter-pump-intex-pool-pump-and-filter-filtration-set-for-above-ground-swimming-pools/\", waiting until \"domcontentloaded\"\n",
     "last_in_stock_at": null,
     "price": 150.0,
     "price_text": "\u00a3150.00",
@@ -74,7 +74,7 @@
   "onbuy-bestway-800gal": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-09-05T08:48:18+00:00",
+    "last_checked": "2026-09-05T13:15:34+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -86,7 +86,7 @@
   "poolpro-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-09-05T08:47:34+00:00",
+    "last_checked": "2026-09-05T13:14:36+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -98,7 +98,7 @@
   "splashandrelax-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-09-05T08:48:09+00:00",
+    "last_checked": "2026-09-05T13:15:22+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
