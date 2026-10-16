@@ -2,7 +2,7 @@
   "amazon-sx925-26641": {
     "in_stock": true,
     "last_alerted_at": "2026-08-18T15:28:21+00:00",
-    "last_checked": "2026-10-16T18:36:13+00:00",
+    "last_checked": "2026-10-16T22:28:57+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-10-13T05:20:09+00:00",
     "price": 140.41,
@@ -14,7 +14,7 @@
   "amazon-sx925-6way": {
     "in_stock": true,
     "last_alerted_at": "2026-08-26T10:32:29+00:00",
-    "last_checked": "2026-10-16T18:36:20+00:00",
+    "last_checked": "2026-10-16T22:29:06+00:00",
     "last_error": null,
     "last_in_stock_at": "2026-10-05T12:01:31+00:00",
     "price": 91.66,
@@ -26,7 +26,7 @@
   "bestwaystore-800gal": {
     "in_stock": false,
     "last_alerted_at": "2026-08-13T10:59:44+00:00",
-    "last_checked": "2026-10-16T18:37:00+00:00",
+    "last_checked": "2026-10-16T22:29:45+00:00",
     "last_error": "HTTPStatusError: Client error '429 Too Many Requests' for url 'https://www.bestwaystore.co.uk/products/800gal-flowclear-filter-pump.js'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429",
     "last_in_stock_at": "2026-08-13T10:59:44+00:00",
     "price": 59.99,
@@ -38,7 +38,7 @@
   "discountleisure-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-10-16T18:36:30+00:00",
+    "last_checked": "2026-10-16T22:29:13+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": 39.99,
@@ -50,8 +50,8 @@
   "heatpumps4pools-sx925": {
     "in_stock": false,
     "last_alerted_at": null,
-    "last_checked": "2026-10-16T18:35:52+00:00",
-    "last_error": null,
+    "last_checked": "2026-10-16T22:28:41+00:00",
+    "last_error": "Error: Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://heatpumps4pools.com/product/krystal-clear-sx925-sand-filter-pump-intex-pool-pump-and-filter-filtration-set-for-above-ground-swimming-pools/\nCall log:\nnavigating to \"https://heatpumps4pools.com/product/krystal-clear-sx925-sand-filter-pump-intex-pool-pump-and-filter-filtration-set-for-above-ground-swimming-pools/\", waiting until \"domcontentloaded\"\n",
     "last_in_stock_at": null,
     "price": 150.0,
     "price_text": "\u00a3150.00",
@@ -74,7 +74,7 @@
   "onbuy-bestway-800gal": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-10-16T18:36:52+00:00",
+    "last_checked": "2026-10-16T22:29:35+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -86,7 +86,7 @@
   "poolpro-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-10-16T18:36:01+00:00",
+    "last_checked": "2026-10-16T22:28:45+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
@@ -98,7 +98,7 @@
   "splashandrelax-sx925": {
     "in_stock": null,
     "last_alerted_at": null,
-    "last_checked": "2026-10-16T18:36:44+00:00",
+    "last_checked": "2026-10-16T22:29:26+00:00",
     "last_error": null,
     "last_in_stock_at": null,
     "price": null,
